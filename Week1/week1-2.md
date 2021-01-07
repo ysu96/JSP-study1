@@ -74,7 +74,11 @@
         return "hello";
       }
     }
-    
+  
+  * GetMapping : url을 get해서 "hello"가 매칭이 되면 컨트롤러에 있는 hello 메소드가 실행됨
+  * hello 메소드 : 모델을 생성해 키(data)에 값(hello!!)를 넣고 리턴
+  * 컨트롤러의 리턴 값으로 문자를 반환하면 resources/templates에 있는 동일한 파일을 찾아 렌더링
+  
   3. resources/templates/hello.html
   
     <!DOCTYPE HTML>
@@ -91,7 +95,17 @@
   4. thymeleaf 템플릿엔진 동작 확인
   * 실행 : http://localhost:8080/hello
   
-  ![Alt text](./images/1.png)
+  ![1.PNG](./images/1.PNG)
   
+- - -
+# 4. 빌드하고 실행하기 (윈도우)
+    * 명령 프롬프트(cmd)로 이동
+    * gradlew.bat 실행
+        * gradlew build
+    * cd build/libs
+    *  실행 : java -jar hello-spring-0.0.1-SNAPSHOT.jar
+    
+    * build 폴더 없애려면 gradlew clean
+    * 지우고 다시 빌드 : gradlew clean build
   
   
