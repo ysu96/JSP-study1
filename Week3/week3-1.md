@@ -24,7 +24,7 @@
   -> id는 1로 자동으로 들어가서 등록됨
   
   ![1.PNG](./images/1.PNG)
-
+- - -
 ## 2. JDBC
 #### 환경설정
 * build.gradle 파일에 jdbc, h2 데이터베이스 관련 라이브러리 추가
@@ -45,3 +45,40 @@
 * 스프링 컨테이너와 DB까지 연결한 통합 테스트
 * @SpringBootTest : 스프링 컨테이너와 테스트를 함께 실행
 * @Transactional : 테스트 시작 전에 트랜잭션 시작, 완료 후에 롤백(이렇게 하면 DB에 데이터 안남음)
+- - -
+## 3. 스프링 JdbcTemplate
+* 순수 jdbc와 동일 환경설정 (build.gradle)
+* jdbc api 반복코드 대부분 제거, SQL은 직접 작성해야함
+* 생성자가 하나일 땐 생성자에 @Autowired 생략해도 빈으로 만들어짐
+* JdbcTemplateMemberRepository.java
+- - -
+## 4. JPA
+* 반복 코드, SQL도 자동으로 처리해줌
+#### (1) build.gradle 파일에 jpa 관련 라이브러리 추가
+    ```
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    ```
+#### (2) 스프링부트에 JPA 설정 추가 (resources/application.properties)
+    ```
+    spring.jpa.show-sql=true //jpa가 생성하는 sql을 출력한다. 
+    spring.jpa.hibernate.ddl-auto=none //jpa의 테이블 자동생성기능 (create,none)
+    ```
+* JPA : 인터페이스, hibernate : 구현체
+
+#### (3) JPA 엔티티 맵핑 (도메인)
+* @Entity
+* @Id 
+* @GeneratedValue(strategy = GenerationType.IDENTITY) : DB가 id 자동으로 생성?
+
+#### (4) JPA 회원 레퍼지토리
+* JPA는 EntityManager로 모든 동작 수행
+* build.gradle에 jpa라이브러리 implement 되어있으면 스프링부트가 자동으로 entitymanager 생성
+* 인젝션 받으면 됨
+* 여러 리스트를 돌리는 경우 jpql 작성해야함 ( findByName, findAll ..)
+
+#### (5) 서비스 계층에 트랜잭션 추가
+* @Transactional : 스프링은 해당 클래스 메소드를 실행할 때 트랜잭션 시작하고 정상 종료되면 트랜잭션을 커밋함, 예외가 발생하면 롤백
+* JPA를 통한 모든 데이터 변경은 트랜잭션 안에서 실행해야함
+
+- - -
+## 스프링 데이터 JPA
