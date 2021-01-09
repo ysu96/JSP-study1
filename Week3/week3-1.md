@@ -24,3 +24,24 @@
   -> id는 1로 자동으로 들어가서 등록됨
   
   ![1.PNG](./images/1.PNG)
+
+## 2. JDBC
+#### 환경설정
+* build.gradle 파일에 jdbc, h2 데이터베이스 관련 라이브러리 추가
+     ```
+     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+     runtimeOnly 'com.h2database:h2'
+     ```
+* 스프링부트 데이터베이스 연결 설정 추가 (resources/application.properties)
+    ```
+    spring.datasource.url=jdbc:h2:tcp://localhost/~/test
+    spring.datasource.driver-class-name=org.h2.Driver
+    spring.datasource.username=sa
+    ```
+* Jdbc 레포지토리 구현 (jdbc api 직접코딩, 참고만)
+    * DataSource : 데이터베이스 커넥션을 획득할 때 사용하는 객체(스프링부트가 빈으로 만들어줌)
+    
+#### 스프링 통합 테스트
+* 스프링 컨테이너와 DB까지 연결한 통합 테스트
+* @SpringBootTest : 스프링 컨테이너와 테스트를 함께 실행
+* @Transactional : 테스트 시작 전에 트랜잭션 시작, 완료 후에 롤백(이렇게 하면 DB에 데이터 안남음)
